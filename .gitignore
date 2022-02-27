@@ -1,0 +1,19 @@
+# ignore package.json
+package.json
+package-lock.json
+
+# ignore css files
+bootstrap.css
+bootstrap.min.css
+
+# ignore js files
+gruntfile.js
+bootstrap.bundle.js
+bootstrap.bundle.min.js
+
+# ignore everything in the "node_modules" directory
+node_modules
+
+# ignore .zip file
+*.zip
+
