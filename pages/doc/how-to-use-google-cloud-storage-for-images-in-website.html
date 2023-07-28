@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-YF41QN43KM"></script>
+    <script>
+    if ( location.hostname !== "localhost" || location.hostname !== "127.0.0.1" ) {
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-YF41QN43KM');
+
+    }
+    </script> -->
+    
+    <title>Shuban Studio</title>
+</head>
+<body>
+    <div class="container py-3">
+        <header>
+            <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+                    <span class="fs-4">Shuban Studio</span>
+                </a>
+
+                <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                    <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/">Home</a>
+                    <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/pages/doc.html">Docs</a>
+                    <!-- <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/pages/faq.html">FAQs</a> -->
+                    <a href="mailto:shuban.studio@gmail.com" rel="nofollow" target="_blank" class="py-2 link-body-emphasis text-decoration-none">Contact Us</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="rounded">
+            <div class="col-sm-8 py-5 mx-auto">
+                <h1 class="display-5 fw-normal">How to use Google Cloud Storage for images in website?</h1>
+                <p>It’s very easy to use Google Cloud Storage for images in website. It really helps to reduce development server load. Also, we can add some headers for images like cache control, expiry etc. It is not costly as compare to other storage.</p>
+
+                <p>Here you can see step-by-step guide to add images in storage using “gsutil” tool and add that images url from storage to your website.</p>
+
+                <p>Google Cloud Storage allows user to add images using google api, gsutil tool etc. Here we are going to use gsutil tool to upload images.</p>
+
+                <p>“gsutil” tool is provided by Google Cloud SDK which is very easy and powerful tool to copy, move, delete images from local storage or from your computer to Google Cloud Storage Bucket.</p>
+
+                <ol>
+                    <li>
+                        First login into your Google Cloud console account, if you not created project yet then first you need to create project then from menu find option Cloud Storage, click on it then you will see create Bucket button on page.
+                    </li>
+                    <li>
+                        Enter Bucket name, region, encryption, access control (Uniform, Fine-grated) etc. Select Uniform option which helps to makes images available publicly. Here, we are using “marketplace” as a bucket name.
+                    </li>
+                    <li>
+                        Now on your local system install or download Google Cloud SDK. Using <a rel="noreferrer noopener" href="https://cloud.google.com/sdk/docs/install" target="_blank">https://cloud.google.com/sdk/docs/install</a> link you can check information to install Google Cloud SDK platform wise. Here we are going to use zip file which can be downloaded Google Cloud SDK from url <a rel="noreferrer noopener" href="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-340.0.0-linux-x86_64.tar.gz" target="_blank">https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-340.0.0-linux-x86_64.tar.gz</a>.</li>
+                    <li>
+                        After downloading extract file on your system and then go to bin folder from command line.
+                    </li>
+                    <li>
+                        Now to authenticate Google SDK, you need to enter command
+                        "./gcloud init" this will open Google sign in page in your browser enter your credential to authenticate 
+                        OR
+                        "./gcloud init --console-only" this will give link on command line, visit it from your browser, enter your credentials then you will get verification code which you need to copy and paste it on command line. For more information you can visit below link:
+                        <a rel="noreferrer noopener" href="https://cloud.google.com/storage/docs/gsutil_install#creds-sdk" target="_blank">https://cloud.google.com/storage/docs/gsutil_install#creds-sdk</a>
+                    </li>
+                    <li>
+                        <p>Next, you need to enter “gsutil” command to upload your images on Google Cloud Storage Bucket from your local system. For example, see below command </p>
+
+                        <p>./gsutil -m cp /var/www/html/crm/wp-content/uploads/2021/04/*.jpeg gs://marketplace/images/ </p>
+
+                        <p>Here -m option is very useful if your uploading multiple images; it uploads images simultaneously to bucket.</p>
+
+                        <p>cp option copying images from local to bucket. Here our bucket name is “marketplace” you can replace it with your own bucket name and “images” is sub-folder / sub-bucket (optional) which gets created automatically in bucket, here we are copying all images at once by providing *.jpeg / *.jpg etc. </p>
+
+                        <p>You can also provide name of the file a.jpeg, if you want to upload images starts with a- then you can use a-*.jpeg for images a-1.jpeg, a-2.jpeg etc. to upload only single / multiple images.</p>
+
+                        <p>/var/www/html/crm/wp-content/uploads/2021/04/*.jpeg this is folder which contain jpeg images.</p>
+
+                        <p>gs://marketplace/images/ this Google Cloud Storage Bucket url which contains name of bucket “marketplace” and sub-folder / sub-bucket “images” (optional).</p>
+
+                        <p>Also, if you use above command multiple times it just updates / replaces uploaded images, it does not create copy of the images.</p>
+                    </li>
+                    <li>
+                        <p>Now in order to use browser cache capability, set metadata to images using below command to cache control, expiry etc.</p>
+
+                        <p>./gsutil -m setmeta -h “Cache-Control:public, max-age=31536000” gs://marketplace/images/*.jpeg</p>
+
+                        <p>here we are setting cache control public to save this image in browser cache so our bucket will not access every time and images are served from cache itself.</p>
+
+                        <p>max-age is use to represent how many days or time image will be saved in browser cache, here we have used 31536000 seconds which is equal to 1 year.</p>
+                    </li>
+                    <li>
+                        <p>Now we need to use public bucket url to load image from Google Cloud Storage. For example, </p>
+
+                        <p>https://storage.googleapis.com/marketplace/images/a.jpeg</p>
+
+                        <p>marketplace – Bucket name</p>
+
+                        <p>images – sub-folder / sub-bucket name which we used while uploading command.</p>
+
+                        <p>a.jpg – filename</p>
+
+                        <p>That’s it now your are ready to serve images from Google Cloud Storage Bucket. Replace your website images url with bucket images url. It really helps to reduce server load and it comes with very low cost.</p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <footer class="pt-3 mt-4">
+            <ul class="nav justify-content-center border-top pt-3 mt-3">
+                <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="/pages/doc.html" class="nav-link px-2 text-body-secondary">Docs</a></li>
+                <!-- <li class="nav-item"><a href="/pages/faq.html" class="nav-link px-2 text-body-secondary">FAQs</a></li> -->
+                <li class="nav-item"><a href="mailto:shuban.studio@gmail.com" rel="nofollow" target="_blank" class="nav-link px-2 text-body-secondary">Contact Us</a></li>
+            </ul>
+            <p class="text-center text-body-secondary"></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/js/frontend.min.js"></script>
+
+</body>
+</html>
